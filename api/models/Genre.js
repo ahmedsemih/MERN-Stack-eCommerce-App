@@ -10,7 +10,7 @@ const GenreSchema = new mongoose.Schema({
         type:Boolean,
         default:true
     }
-});
+},{versionKey:false});
 
 const Genre = mongoose.model('Genre', GenreSchema);
 module.exports = Genre;
