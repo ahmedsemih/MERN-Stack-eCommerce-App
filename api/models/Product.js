@@ -32,8 +32,12 @@ const ProductSchema = new mongoose.Schema({
     discount: {
         type: Number,
         default: 0
+    },
+    status:{
+        type:Boolean,
+        default:true
     }
-});
+},{versionKey:false});
 
 const Product = mongoose.model('Product', ProductSchema);
 module.exports = Product;
