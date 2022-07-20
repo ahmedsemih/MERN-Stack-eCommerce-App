@@ -2,7 +2,7 @@ const Comment = require('../models/Comment');
 
 exports.getAllComments = async (req, res) => {
     try {
-        const allComments = Comment.find({});
+        const allComments = await Comment.find({});
 
         res.status(200).json({
             allComments
@@ -17,7 +17,7 @@ exports.getAllComments = async (req, res) => {
 
 exports.getCommentById = async (req, res) => {
     try {
-        const comment = Comment.findById(req.params.id);
+        const comment = await Comment.findById(req.params.id);
 
         res.status(200).json({
             comment
@@ -32,7 +32,7 @@ exports.getCommentById = async (req, res) => {
 
 exports.getCommentByAuthorId = async (req, res) => {
     try {
-        const comment = Comment.find({ author: req.body.authorId });
+        const comment = await Comment.find({ author: req.params.id });
 
         res.status(200).json({
             comment
@@ -47,7 +47,7 @@ exports.getCommentByAuthorId = async (req, res) => {
 
 exports.getCommentByProductId = async (req, res) => {
     try {
-        const comment = Comment.find({ for: req.body.productId });
+        const comment = await Comment.find({ for: req.params.id });
 
         res.status(200).json({
             comment
@@ -62,7 +62,7 @@ exports.getCommentByProductId = async (req, res) => {
 
 exports.addComment = async (req, res) => {
     try {
-        const newComment = Comment.create(req.body);
+        const newComment = await Comment.create(req.body);
 
         res.status(201).json({
             newComment
@@ -77,7 +77,7 @@ exports.addComment = async (req, res) => {
 
 exports.updateComment = async (req, res) => {
     try {
-        const comment = Comment.findByIdAndUpdate(req.params.id, req.body, { new: true });
+        const comment = await Comment.findByIdAndUpdate(req.params.id, req.body, { new: true });
 
         res.status(200).json({
             comment
@@ -92,7 +92,7 @@ exports.updateComment = async (req, res) => {
 
 exports.deleteComment = async (req, res) => {
     try {
-        const comment = Comment.findByIdAndDelete(req.params.id);
+        const comment = await Comment.findByIdAndDelete(req.params.id);
 
         res.status(200).json({
             comment

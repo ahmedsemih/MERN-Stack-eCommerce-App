@@ -2,7 +2,7 @@ const Rating = require('../models/Rating');
 
 exports.getAllRatings = async (req, res) => {
     try {
-        const allRatings = Rating.find({});
+        const allRatings = await Rating.find({});
 
         res.status(200).json({
             allRatings
@@ -17,7 +17,7 @@ exports.getAllRatings = async (req, res) => {
 
 exports.getRatingById = async (req, res) => {
     try {
-        const rating = Rating.findById(req.params.id);
+        const rating = await Rating.findById(req.params.id);
 
         res.status(200).json({
             rating
@@ -32,7 +32,7 @@ exports.getRatingById = async (req, res) => {
 
 exports.getRatingByOwnerId = async (req, res) => {
     try {
-        const ratings = Rating.find({ owner: req.body.ownerId });
+        const ratings = await Rating.find({ owner: req.params.id });
 
         res.status(200).json({
             ratings
@@ -47,7 +47,7 @@ exports.getRatingByOwnerId = async (req, res) => {
 
 exports.getRatingByProductId = async (req, res) => {
     try {
-        const ratings = Rating.find({ for: req.body.productId });
+        const ratings = await Rating.find({ for: req.params.id });
 
         res.status(200).json({
             ratings
@@ -62,7 +62,7 @@ exports.getRatingByProductId = async (req, res) => {
 
 exports.addRating = async (req, res) => {
     try {
-        const newRating = Rating.create(req.body);
+        const newRating = await Rating.create(req.body);
 
         res.status(201).json({
             newRating
@@ -77,7 +77,7 @@ exports.addRating = async (req, res) => {
 
 exports.updateRating = async (req, res) => {
     try {
-        const rating = Rating.findByIdAndUpdate(req.params.id, req.body, { new: true });
+        const rating = await Rating.findByIdAndUpdate(req.params.id, req.body, { new: true });
 
         res.status(200).json({
             rating
@@ -92,7 +92,7 @@ exports.updateRating = async (req, res) => {
 
 exports.deleteRating = async (req, res) => {
     try {
-        const rating = Rating.findByIdAndDelete(req.params.id);
+        const rating = await Rating.findByIdAndDelete(req.params.id);
 
         res.status(200).json({
             rating
