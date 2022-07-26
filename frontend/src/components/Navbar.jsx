@@ -1,20 +1,30 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
 import { Box, Text, Icon, Menu, MenuList, MenuItem, MenuButton } from '@chakra-ui/react';
 import { Person, Favorite, ShoppingCart, ExitToApp } from '@mui/icons-material';
 
+import { getAllGenres } from '../services/GenreServices';
 import { useUserContext } from '../contexts/UserContext';
 import Hamburger from './Hamburger';
 import Dropdown from './Dropdown';
 import Searchbar from './Searchbar';
 
+
 const Navbar = () => {
 
+  const [genres,setGenres]=useState([]);
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
   const { currentUser, setCurrentUser } = useUserContext();
   const [cookies, setCookie, removeCookie] = useCookies(['currentUser']);
+
+  useEffect(()=>{
+    getAllGenres()
+    .then(result=>{
+      setGenres(result.allGenres);
+    });
+  },[]);
 
   const Logout = () => {
     removeCookie('currentUser', { path: '/' });
@@ -112,10 +122,13 @@ const Navbar = () => {
       <Box
         display={{ base: 'none', md: 'flex' }}
         py={{ base: 1, md: 2 }}
+        ps={5}
         width='100%'>
-        <Dropdown title={'Men'} />
-        <Dropdown title={'Women'} />
-        <Dropdown title={'Child'} />
+          {
+            genres.map((genre)=>{
+              return genre.status && <Dropdown key={genre.name} title={genre.name} genreId={genre._id} />
+            })
+          }
       </Box>
     </Box>
   )
