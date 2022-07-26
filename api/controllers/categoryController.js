@@ -33,7 +33,7 @@ exports.getCategoryById = async (req, res) => {
 
 exports.getCategoryByGenre = async (req, res) => {
     try {
-        const category = await Category.find({ genre: req.body.genre });
+        const category = await Category.find({ genre: req.params.id  });
 
         res.status(200).json({
             category
