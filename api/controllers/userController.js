@@ -59,3 +59,67 @@ exports.deleteUser = async (req, res) => {
         });
     }
 };
+
+// FAVORITE SYSTEM
+
+exports.addFavorite = async (req, res) => {
+    try {
+        const user = await User.findById(req.params.id);
+        var isFavorite = false;
+        const favoriteArray = [];
+
+        user.favorites.forEach(f => {
+            favoriteArray.push(f);
+            if (f !== null && f == req.params.favorite) { isFavorite = true };
+        });
+
+        if (!isFavorite) {
+            favoriteArray.push(req.params.favorite);
+            user.favorites = favoriteArray;
+            user.save();
+
+            res.status(200).json({
+                favorites: user.favorites
+            });
+
+        } else {
+            res.status(200).json({
+                status: 'failed',
+                error: 'this is already your favorite.'
+            });
+        }
+
+    } catch (error) {
+        res.status(400).json({
+            status: 'failed',
+            error
+        });
+    }
+};
+
+exports.deleteFavorite = async (req, res) => {
+    try {
+        const user = await User.findById(req.params.id);
+
+        const favoritesArray = []
+
+        user.favorites.forEach((f) => {
+            if (f !== req.params.favorite) {
+                favoritesArray.push(f);
+            }
+        });
+
+        user.favorites = favoritesArray;
+        user.save();
+
+        res.status(200).json({
+            favorites: user.favorites
+        });
+
+    } catch (error) {
+        res.status(400).json({
+            status: 'failed',
+            error
+        });
+    }
+};
