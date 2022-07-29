@@ -10,10 +10,8 @@ export const getUserById = async (id) => {
     return data;
 };
 
-export const updateUser = async ({ id, name, lastname, address, phone }) => {
+export const updateUser = async ( id, address, phone ) => {
     const { data } = await axios.put(`${process.env.REACT_APP_API_BASE_URL}/users/${id}`, {
-        name,
-        lastname,
         address,
         phone
     });

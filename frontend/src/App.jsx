@@ -9,7 +9,7 @@ import Register from './pages/Register';
 import Cart from './pages/Cart';
 import Favorites from './pages/Favorites';
 import Product from './pages/Product';
-import Profile from './pages/Profile';
+import Infos from './pages/Infos';
 import Purchase from './pages/Purchase';
 import Search from './pages/Search';
 
@@ -25,7 +25,7 @@ const App = () => {
         <Route path='/favorites' element={<Favorites />} />
         <Route path='/product' element={<Product />} />
         <Route path='/product/:id' element={<Product />} />
-        <Route path='/profile' element={<Profile />} />
+        <Route path='/infos' element={<Infos />} />
         <Route path='/purchase' element={<Purchase />} />
         <Route path='/search' element={<Search />} />
       </Routes>

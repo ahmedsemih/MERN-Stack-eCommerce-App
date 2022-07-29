@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
-import { Box, Text, Icon, Menu, MenuList, MenuItem, MenuButton } from '@chakra-ui/react';
-import { Person, Favorite, ShoppingCart, ExitToApp } from '@mui/icons-material';
+import { Box, Text, Icon, Menu, MenuList, MenuItem, MenuButton, MenuGroup, Divider } from '@chakra-ui/react';
+import { Person, Favorite, ShoppingCart, ExitToApp, ShoppingBag } from '@mui/icons-material';
 
 import { getAllGenres } from '../services/GenreServices';
 import { useUserContext } from '../contexts/UserContext';
@@ -32,7 +32,14 @@ const Navbar = () => {
   };
 
   return (
-    <Box display='flex' flexDirection='column' boxShadow='rgba(0, 0, 0, 0.24) 0px 3px 8px' position='sticky' >
+    <Box 
+    display='flex' 
+    flexDirection='column' 
+    boxShadow='rgba(0, 0, 0, 0.24) 0px 3px 8px'
+    position='sticky' 
+    top='0px' 
+    backgroundColor='#fff' 
+    zIndex={500} >
       <Box
         display={'flex'}
         flexDirection={{ base: 'column', sm: 'row' }}
@@ -78,7 +85,11 @@ const Navbar = () => {
                   <Text color='inherit' fontWeight={500} >Account</Text>
                   <MenuButton />
                   <MenuList >
-                    <MenuItem onClick={() => navigate('/profile')} ><Person sx={{ marginRight: 2 }} /> Account</MenuItem>
+                    <MenuGroup title='Account' >
+                    <MenuItem onClick={() => navigate('/infos')} ><Person sx={{ marginRight: 2 }} /> My Informations</MenuItem>
+                    <MenuItem onClick={() => navigate('/orders')} ><ShoppingBag sx={{ marginRight: 2 }} /> Orders</MenuItem>
+                    </MenuGroup>
+                    <Divider/>
                     <MenuItem onClick={Logout} ><ExitToApp sx={{ marginRight: 2 }} /> Log out</MenuItem>
                   </MenuList>
                 </Menu>
