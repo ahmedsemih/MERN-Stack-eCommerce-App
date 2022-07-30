@@ -29,12 +29,13 @@ export const addOrder = async (products, buyer, address) => {
     return data;
 };
 
-export const updateOrderStatus = async ({ id, status, prepare, onWay, delivered }) => {
+export const updateOrderStatus = async ({ id, status, prepare, onWay, delivered,cancel }) => {
     const { data } = await axios.put(`${process.env.REACT_APP_API_BASE_URL}/orders/${id}`, {
         status,
         prepare,
         onWay,
-        delivered
+        delivered,
+        cancel
     });
     return data;
 };
