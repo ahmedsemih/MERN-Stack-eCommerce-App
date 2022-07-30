@@ -10,6 +10,7 @@ const genreRoutes = require('./routes/genreRoutes');
 const ratingRoutes = require('./routes/ratingRoutes');
 const commentRoutes = require('./routes/commentRoutes');
 const orderRoutes = require('./routes/orderRoutes');
+const reportRoutes = require('./routes/reportRoutes');
 
 const app = express();
 const port = process.env.PORT || 4000;
@@ -27,6 +28,7 @@ app.use('/products', productRoutes);
 app.use('/ratings', ratingRoutes);
 app.use('/comments', commentRoutes);
 app.use('/orders', orderRoutes);
+app.use('/reports',reportRoutes);
 
 
 mongoose.connect(process.env.MONGODB_URL, () => {
