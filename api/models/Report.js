@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const ReportSchema = new mongoose.Schema({
-    OrderId: {
+    orderId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Order',
         required: true
@@ -9,7 +9,7 @@ const ReportSchema = new mongoose.Schema({
     userId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
-        required,
+        required:true,
     },
     content: {
         type: String,

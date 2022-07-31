@@ -12,6 +12,7 @@ import Product from './pages/Product';
 import Infos from './pages/Infos';
 import Purchase from './pages/Purchase';
 import Search from './pages/Search';
+import Orders from './pages/Orders';
 
 const App = () => {
   return (
@@ -26,6 +27,7 @@ const App = () => {
         <Route path='/product' element={<Product />} />
         <Route path='/product/:id' element={<Product />} />
         <Route path='/infos' element={<Infos />} />
+        <Route path='/orders' element={<Orders />} />
         <Route path='/purchase' element={<Purchase />} />
         <Route path='/search' element={<Search />} />
       </Routes>

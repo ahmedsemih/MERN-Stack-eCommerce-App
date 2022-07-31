@@ -35,7 +35,7 @@ const Login = () => {
                 duration: 2000,
                 isClosable: true
               });
-              navigate(-1);
+              navigate('/');
                 if (remember) {
                   setCookie('currentUser', result.data.currentUser._id, { path: '/' });
                 } else {

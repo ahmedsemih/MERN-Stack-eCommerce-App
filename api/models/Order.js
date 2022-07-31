@@ -29,8 +29,12 @@ const OrderSchema = new mongoose.Schema({
     delivered: {
         type: Boolean,
         default: false
+    },
+    cancel:{
+        type: Boolean,
+        default: false
     }
-});
+},{versionKey:false});
 
 const Order = mongoose.model('Order', OrderSchema);
 module.exports = Order;

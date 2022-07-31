@@ -47,16 +47,13 @@ const ClothesCard = ({ productId, categoryId, isDelivered }) => {
     <Box
       width='100%'
       display='flex'
-      position='relative'
       justifyContent='center'
       flexDirection='column'
       cursor='pointer'
     >
       <Image
-      position='relative'
-      top='0px'
         width='100%'
-        maxHeight={600}
+        height='auto'
         objectFit='cover'
         src={product.imageUrl}
         onClick={() => navigate(`/product/${product._id}`,{state:{"productId":product._id}})}

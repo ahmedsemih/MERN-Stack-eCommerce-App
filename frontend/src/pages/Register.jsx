@@ -23,28 +23,39 @@ const Register = () => {
       terms: false
     },
     onSubmit: values => {
-      Signup(values.firstName, values.lastName, values.email, values.password, values.phone)
-        .then(result => {
-          if (result.data.newUser) {
-            navigate('/login');
-            toast({
-              title: 'Welcome to CLOTHIFY!',
-              description: 'You have successfully registered.',
-              status: 'success',
-              duration: 2000,
-              isClosable: true
-            });
-          } else {
-            resetForm();
-            toast({
-              title: 'Error!',
-              description: 'This email is already in use.',
-              status: 'error',
-              duration: 2000,
-              isClosable: true
-            });
-          }
+      if (values.phone.length === 11) {
+        Signup(values.firstName, values.lastName, values.email, values.password, values.phone)
+          .then(result => {
+            if (result.data.newUser) {
+              navigate('/login');
+              toast({
+                title: 'Welcome to CLOTHIFY!',
+                description: 'You have successfully registered.',
+                status: 'success',
+                duration: 2000,
+                isClosable: true
+              });
+            } else {
+              resetForm();
+              toast({
+                title: 'Error!',
+                description: 'This email is already in use.',
+                status: 'error',
+                duration: 2000,
+                isClosable: true
+              });
+            }
+          });
+      } else {
+        toast({
+          title: 'Error!',
+          description: 'Please enter a valid phone number.',
+          status: 'error',
+          duration: 2000,
+          isClosable: true
         });
+      }
+
     },
     validationSchema: RegisterValidations
   });

@@ -23,11 +23,11 @@ const Favorites = () => {
   if (currentUser !== "") {
     if (favorites.length !== 0) {
       return (
-        <Box p={3}>
+        <Box px={10} py={5}>
           <SimpleGrid columns={{ base: 1, sm: 2, lg: 3, xl: 4 }} spacing={3} >
             {
               favorites.map((favorite) => {
-                return <ClothesCard productId={favorite} />
+                return <ClothesCard key={favorite} productId={favorite} />
               })
             }
           </SimpleGrid>

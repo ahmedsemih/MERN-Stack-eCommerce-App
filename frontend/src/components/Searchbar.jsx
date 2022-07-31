@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Box, FormControl, Input, InputGroup, Button, InputRightElement } from '@chakra-ui/react';
 import { Search } from '@mui/icons-material';
 
@@ -9,6 +10,7 @@ const Searchbar = () => {
 
     const [searchText, setSearchText] = useState("");
     const { setSearch } = useSearchContext();
+    const navigate=useNavigate();
 
     const handleInput = (e) => {
         setSearchText(e.target.value);
@@ -16,7 +18,7 @@ const Searchbar = () => {
 
     const handleSubmit = (e) => {
         setSearch(searchText);
-        console.log(searchText);
+        navigate(`/search`);
         e.preventDefault();
     };
 

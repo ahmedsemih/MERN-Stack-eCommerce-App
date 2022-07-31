@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useDisclosure, MenuItem, Menu, MenuButton, MenuList, Box } from '@chakra-ui/react';
 
 import { getCategoryByGenre } from '../services/CategoryServices';
 
 const Dropdown = ({ title, genreId }) => {
 
+    const navigate=useNavigate();
     const { isOpen, onOpen, onClose } = useDisclosure();
     const [categories,setCategories]=useState([]);
 
@@ -14,6 +16,10 @@ const Dropdown = ({ title, genreId }) => {
             setCategories(result.category);
         });
     },[genreId]);
+
+    const handleClick=(categoryId)=>{
+        navigate('/search',{state:{categoryId:categoryId}});
+    };
 
      return categories.length !== 0 && (
         <Box pe={{base:2,md:10}}>
@@ -35,7 +41,7 @@ const Dropdown = ({ title, genreId }) => {
                 >
                     {
                         categories && categories.map((category)=>{
-                            return category.status && <MenuItem key={category._id} >{category.name}</MenuItem>
+                            return category.status && <MenuItem key={category._id} onClick={()=>handleClick(category._id)} >{category.name}</MenuItem>
                         })
                     }
                 </MenuList>
