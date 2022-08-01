@@ -9,7 +9,7 @@ import { useSearchContext } from '../contexts/SearchContext';
 const Searchbar = () => {
 
     const [searchText, setSearchText] = useState("");
-    const { setSearch } = useSearchContext();
+    const { setSearch, setCanSearch } = useSearchContext();
     const navigate=useNavigate();
 
     const handleInput = (e) => {
@@ -17,6 +17,7 @@ const Searchbar = () => {
     };
 
     const handleSubmit = (e) => {
+        setCanSearch(true);
         setSearch(searchText);
         navigate(`/search`);
         e.preventDefault();

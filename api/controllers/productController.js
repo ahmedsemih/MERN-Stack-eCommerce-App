@@ -32,7 +32,13 @@ exports.getProductById = async (req, res) => {
 
 exports.getProductsByColor = async (req, res) => {
     try {
-        const products = await Product.find({ color: req.params.color });
+        const products = await Product.find({ 
+            $and: [
+                { price: { $gte: req.body.lowest } },
+                { price: { $lte: req.body.uppest } },
+                { color: req.params.color }
+            ]
+         });
 
         res.status(200).json({
             products
@@ -62,7 +68,14 @@ exports.getProductsByCategoryId = async (req, res) => {
 
 exports.getProductsByGender = async (req, res) => {
     try {
-        const products = await Product.find({ gender: req.params.gender });
+        const products = await Product.find({
+            $and: [
+                { price: { $gte: req.body.lowest } },
+                { price: { $lte: req.body.uppest } },
+                { gender: req.params.gender }
+            ]
+        });
+
 
         res.status(200).json({
             products
@@ -77,7 +90,7 @@ exports.getProductsByGender = async (req, res) => {
 
 exports.getProductsByPrice = async (req, res) => {
     try {
-        const products = await Product.find({ $and: [{ price: { $gte: req.body.lower } }, { price: { $lte: req.body.upper } }] });
+        const products = await Product.find({ $and: [{ price: { $gte: req.body.lowest } }, { price: { $lte: req.body.uppest } }] });
 
         res.status(200).json({
             products
@@ -108,6 +121,28 @@ exports.getProductsByStatus = async (req, res) => {
 exports.getProductsBySearch = async (req, res) => {
     try {
         const products = await Product.find({ name: { $regex: '.*' + req.params.search + '.*', "$options": "i" } });
+
+        res.status(200).json({
+            products
+        });
+    } catch (error) {
+        res.status(400).json({
+            status: 'failed',
+            error
+        });
+    }
+};
+
+exports.getProductsByQueries = async (req, res) => {
+    try {
+        const products = await Product.find({
+            $and:
+                [
+                    { price: { $gte: req.body.lowest } }, { price: { $lte: req.body.uppest } },
+                    { color: req.body.color },
+                    { gender: req.body.gender }
+                ]
+        });
 
         res.status(200).json({
             products
