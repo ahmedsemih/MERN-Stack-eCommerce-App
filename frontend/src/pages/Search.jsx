@@ -23,15 +23,16 @@ const Search = () => {
         .then((result) => {
           setProducts(result.products);
         });
-        setSortBy("recommended");
+      setSortBy("recommended");
     }
     if (search !== "" && search !== " " && search !== null && search !== undefined && canSearch) {
       getProductBySearch(search)
         .then((result) => {
           setProducts(result.products);
         });
-        setSortBy("recommended");
+      setSortBy("recommended");
     }
+
   }, [state, products, sortBy, search, canSearch]);
 
   const handleChange = (e) => {
