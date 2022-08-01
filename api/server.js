@@ -11,7 +11,8 @@ const ratingRoutes = require('./routes/ratingRoutes');
 const commentRoutes = require('./routes/commentRoutes');
 const orderRoutes = require('./routes/orderRoutes');
 const reportRoutes = require('./routes/reportRoutes');
-const imageRoutes=require('./routes/imageRoutes');
+const imageRoutes = require('./routes/imageRoutes');
+const miniImageRoutes = require('./routes/miniImageRoutes');
 
 const app = express();
 const port = process.env.PORT || 4000;
@@ -29,9 +30,9 @@ app.use('/products', productRoutes);
 app.use('/ratings', ratingRoutes);
 app.use('/comments', commentRoutes);
 app.use('/orders', orderRoutes);
-app.use('/reports',reportRoutes);
-app.use('/images',imageRoutes);
-
+app.use('/reports', reportRoutes);
+app.use('/images', imageRoutes);
+app.use('/minis', miniImageRoutes)
 
 mongoose.connect(process.env.MONGODB_URL, () => {
     console.log('Successfully connected to database.');
