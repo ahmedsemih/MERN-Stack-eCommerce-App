@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import { Box, Image, SimpleGrid, Text, Divider, Button, IconButton } from '@chakra-ui/react';
+import { Box, Image, SimpleGrid, Text, Divider, Button, IconButton, useDisclosure } from '@chakra-ui/react';
 import { Favorite, FavoriteBorder, Info } from '@mui/icons-material';
 import StarRatings from 'react-star-ratings';
 
@@ -11,12 +11,14 @@ import { getProductById } from '../services/ProductServices';
 import { addFavorite, deleteFavorite } from '../services/UserServices';
 import { getCommentByProductId } from '../services/CommentServices';
 import { getRatingByProductId } from '../services/RatingServices';
+import ReviewModal from '../components/ReviewModal';
 
 const Product = () => {
 
 
   const location = useLocation();
   const { currentUser } = useUserContext();
+  const { isOpen, onOpen, onClose } = useDisclosure();
   const [status] = useGetFavoriteStatus(currentUser, location.state.productId);
   const [isFavorite, setIsFavorite] = useState(false);
   const [ratings, setRatings] = useState(0);
@@ -36,9 +38,10 @@ const Product = () => {
     getRatingByProductId(location.state.productId)
       .then((result) => {
         var star = 0;
-        result.ratings.forEach((r, index) => {
-          setRatings((star + r.rating) / (index + 1));
+        result.ratings.forEach((r) => {
+          star += r.rating
         });
+        setRatings(star/result.ratings.length);
         setRatingCount(result.ratings.length);
       });
     getCommentByProductId(location.state.productId)
@@ -61,11 +64,8 @@ const Product = () => {
 
   };
 
-  const onClickWriteReview=()=>{
-
-  };
-
   return (
+    <>
     <Box p={{ base: 3, md: 10 }}  >
       <Box display='flex' justifyContent='center'>
         <SimpleGrid width={1200} columns={{ base: 1, md: 2 }} >
@@ -172,7 +172,7 @@ const Product = () => {
             </Box>
             <Text my={3} display='flex' alignItems='center' ><Info sx={{ fontSize: '16px', mr: 1 }} /> You must have purchased the product for write a review.  </Text>
           </Box>
-          <Button ml={2} mr={{ base: 0, md: 5 }} height={50} colorScheme='facebook' onClick={onClickWriteReview} >
+          <Button ml={2} mr={{ base: 0, md: 5 }} height={50} colorScheme='facebook' onClick={onOpen} >
             Write a Review
           </Button>
         </Box>
@@ -183,6 +183,8 @@ const Product = () => {
         }
       </Box>
     </Box>
+    <ReviewModal isOpen={isOpen} onClose={onClose} productId={location.state.productId} />
+    </>
   )
 }
 

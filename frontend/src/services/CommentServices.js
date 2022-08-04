@@ -39,6 +39,6 @@ export const updateComment = async (id, productId, comment, author) => {
 };
 
 export const deleteComment = async (id) => {
-    const { data } = await axios.delete(`${process.env.REACT_APP_API_BASE_URL}/comment/${id}`);
+    const { data } = await axios.delete(`${process.env.REACT_APP_API_BASE_URL}/comments/${id}`);
     return data;
 };
