@@ -6,6 +6,7 @@ import { Person, Favorite, ShoppingCart, ExitToApp, ShoppingBag } from '@mui/ico
 
 import { getAllGenres } from '../services/GenreServices';
 import { useUserContext } from '../contexts/UserContext';
+import { useCartContext } from '../contexts/CartContext';
 import Hamburger from './Hamburger';
 import Dropdown from './Dropdown';
 import Searchbar from './Searchbar';
@@ -13,18 +14,29 @@ import Searchbar from './Searchbar';
 
 const Navbar = () => {
 
-  const [genres,setGenres]=useState([]);
+  const [genres, setGenres] = useState([]);
   const [open, setOpen] = useState(false);
+  const [itemCount, setItemCount] = useState(0);
   const navigate = useNavigate();
   const { currentUser, setCurrentUser } = useUserContext();
+  const { cart, refresh } = useCartContext();
   const [cookies, setCookie, removeCookie] = useCookies(['currentUser']);
 
-  useEffect(()=>{
+  useEffect(() => {
     getAllGenres()
-    .then(result=>{
-      setGenres(result.allGenres);
-    });
-  },[]);
+      .then(result => {
+        setGenres(result.allGenres);
+      });
+    var count = 0;
+    if(cart.length){
+      cart.forEach((item) => {
+        if(item.amount){
+          count += item.amount;
+        }   
+      });
+    }
+    setItemCount(count);
+  },[refresh,cart,cookies.cart]);
 
   const Logout = () => {
     removeCookie('currentUser', { path: '/' });
@@ -32,14 +44,14 @@ const Navbar = () => {
   };
 
   return (
-    <Box 
-    display='flex' 
-    flexDirection='column' 
-    boxShadow='rgba(0, 0, 0, 0.24) 0px 3px 8px'
-    position='sticky' 
-    top='0px' 
-    backgroundColor='#fff' 
-    zIndex={500} >
+    <Box
+      display='flex'
+      flexDirection='column'
+      boxShadow='rgba(0, 0, 0, 0.24) 0px 3px 8px'
+      position='sticky'
+      top='0px'
+      backgroundColor='#fff'
+      zIndex={500} >
       <Box
         display={'flex'}
         flexDirection={{ base: 'column', sm: 'row' }}
@@ -64,7 +76,7 @@ const Navbar = () => {
           >CLOTHIFY</Text>
           <Hamburger base='flex' sm='none' md='none' />
         </Box>
-        <Searchbar/>
+        <Searchbar />
         <Box display={{ base: 'none', md: 'flex' }} alignItems='center' px={2} >
           <Box
             color='facebook.500'
@@ -86,10 +98,10 @@ const Navbar = () => {
                   <MenuButton />
                   <MenuList >
                     <MenuGroup title='Account' >
-                    <MenuItem onClick={() => navigate('/infos')} ><Person sx={{ marginRight: 2 }} /> My Informations</MenuItem>
-                    <MenuItem onClick={() => navigate('/orders')} ><ShoppingBag sx={{ marginRight: 2 }} /> Orders</MenuItem>
+                      <MenuItem onClick={() => navigate('/infos')} ><Person sx={{ marginRight: 2 }} /> My Informations</MenuItem>
+                      <MenuItem onClick={() => navigate('/orders')} ><ShoppingBag sx={{ marginRight: 2 }} /> Orders</MenuItem>
                     </MenuGroup>
-                    <Divider/>
+                    <Divider />
                     <MenuItem onClick={Logout} ><ExitToApp sx={{ marginRight: 2 }} /> Log out</MenuItem>
                   </MenuList>
                 </Menu>
@@ -125,7 +137,7 @@ const Navbar = () => {
             onClick={() => navigate('/cart')}
           >
             <Icon fontSize={30} color='inherit' as={ShoppingCart} />
-            <Text color='inherit' fontWeight={500} >Cart</Text>
+            <Text color='inherit' fontWeight={500} >{itemCount > 0 ? `Cart (${itemCount})` : 'Cart'}</Text>
           </Box>
         </Box>
         <Hamburger base='none' sm='flex' md='none' />
@@ -135,11 +147,11 @@ const Navbar = () => {
         py={{ base: 1, md: 2 }}
         ps={5}
         width='100%'>
-          {
-            genres.map((genre)=>{
-              return genre.status && <Dropdown key={genre.name} title={genre.name} genreId={genre._id} />
-            })
-          }
+        {
+          genres.map((genre) => {
+            return genre.status && <Dropdown key={genre.name} title={genre.name} genreId={genre._id} />
+          })
+        }
       </Box>
     </Box>
   )
