@@ -2,6 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const dotenv = require('dotenv').config();
+const stripe = require("stripe")(process.env.STRIPE_API_KEY);
 
 const categoryRoutes = require('./routes/categoryRoutes');
 const productRoutes = require('./routes/productRoutes');
@@ -32,7 +33,26 @@ app.use('/comments', commentRoutes);
 app.use('/orders', orderRoutes);
 app.use('/reports', reportRoutes);
 app.use('/images', imageRoutes);
-app.use('/minis', miniImageRoutes)
+app.use('/minis', miniImageRoutes);
+
+
+// STRIPE CONNECTION
+
+app.post("/create-payment-intent", async (req, res) => {
+    const { price } = req.body;
+
+    const paymentIntent = await stripe.paymentIntents.create({
+        amount: Number(price),
+        currency: "usd",
+        automatic_payment_methods: {
+            enabled: true,
+        },
+    });
+
+    res.send({
+        clientSecret: paymentIntent.client_secret,
+    });
+});
 
 mongoose.connect(process.env.MONGODB_URL, () => {
     console.log('Successfully connected to database.');
