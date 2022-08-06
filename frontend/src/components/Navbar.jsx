@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
 import { Box, Text, Icon, Menu, MenuList, MenuItem, MenuButton, MenuGroup, Divider } from '@chakra-ui/react';
-import { Person, Favorite, ShoppingCart, ExitToApp, ShoppingBag } from '@mui/icons-material';
+import { Person, Favorite, ShoppingCart, ExitToApp, ShoppingBag, Report, MapsHomeWork, Inventory, Edit } from '@mui/icons-material';
 
 import { getAllGenres } from '../services/GenreServices';
 import { useUserContext } from '../contexts/UserContext';
@@ -10,6 +10,7 @@ import { useCartContext } from '../contexts/CartContext';
 import Hamburger from './Hamburger';
 import Dropdown from './Dropdown';
 import Searchbar from './Searchbar';
+import useGetUserRole from '../hooks/useGetUserRole';
 
 
 const Navbar = () => {
@@ -21,6 +22,7 @@ const Navbar = () => {
   const { currentUser, setCurrentUser } = useUserContext();
   const { cart, refresh } = useCartContext();
   const [cookies, setCookie, removeCookie] = useCookies(['currentUser']);
+  const [admin]=useGetUserRole(currentUser);
 
   useEffect(() => {
     getAllGenres()
@@ -36,7 +38,7 @@ const Navbar = () => {
       });
     }
     setItemCount(count);
-  },[refresh,cart,cookies.cart]);
+  },[refresh,cart,cookies.cart,admin]);
 
   const Logout = () => {
     removeCookie('currentUser', { path: '/' });
@@ -91,7 +93,7 @@ const Navbar = () => {
             onClick={() => !currentUser && navigate('/login')}
           >
             {
-              currentUser ?
+              currentUser && !admin &&
                 <Menu isOpen={open}>
                   <Icon fontSize={30} color='inherit' as={Person} />
                   <Text color='inherit' fontWeight={500} >Account</Text>
@@ -105,11 +107,32 @@ const Navbar = () => {
                     <MenuItem onClick={Logout} ><ExitToApp sx={{ marginRight: 2 }} /> Log out</MenuItem>
                   </MenuList>
                 </Menu>
-                :
-                <>
+            }
+            {
+               !currentUser &&
+               <>
+                 <Icon fontSize={30} color='inherit' as={Person} />
+                 <Text color='inherit' fontWeight={500} >Login</Text>
+               </>
+            }
+            {
+              admin && currentUser &&
+              <Menu isOpen={open}>
                   <Icon fontSize={30} color='inherit' as={Person} />
-                  <Text color='inherit' fontWeight={500} >Login</Text>
-                </>
+                  <Text color='inherit' fontWeight={500} >Admin</Text>
+                  <MenuButton />
+                  <MenuList >
+                    <MenuGroup title='Admin' >
+                      <MenuItem onClick={() => navigate('/admin/products')} ><Inventory sx={{ marginRight: 2 }} />Products</MenuItem>
+                      <MenuItem onClick={() => navigate('/admin/categories')} ><Edit sx={{ marginRight: 2 }} />Genres and Categories</MenuItem>
+                      <MenuItem onClick={() => navigate('/admin/images')} ><MapsHomeWork sx={{ marginRight: 2 }} />Home Page Images</MenuItem>
+                      <MenuItem onClick={() => navigate('/admin/reports')} ><Report sx={{ marginRight: 2 }} />Reports</MenuItem>
+                      <MenuItem onClick={() => navigate('/admin/orders')} ><ShoppingBag sx={{ marginRight: 2 }} />Orders</MenuItem>
+                    </MenuGroup>
+                    <Divider />
+                    <MenuItem onClick={Logout} ><ExitToApp sx={{ marginRight: 2 }} /> Log out</MenuItem>
+                  </MenuList>
+                </Menu>
             }
           </Box>
           <Box
