@@ -59,8 +59,9 @@ export const getProductsByQueries = async (lowest, uppest, gender, color) => {
     return data;
 };
 
-export const addProduct = async (name, color, sizes, description, category, gender, price) => {
+export const addProduct = async (imageUrl,name, color, sizes, description, category, gender, price) => {
     const { data } = await axios.post(`${process.env.REACT_APP_API_BASE_URL}/products`, {
+        imageUrl,
         name,
         color,
         sizes,
@@ -72,22 +73,16 @@ export const addProduct = async (name, color, sizes, description, category, gend
     return data;
 };
 
-export const updateProduct = async (id, name, color, sizes, description, category, gender, price, discount, status) => {
+export const updateProduct = async (id, name, description, price) => {
     const { data } = await axios.put(`${process.env.REACT_APP_API_BASE_URL}/products/${id}`, {
         name,
-        color,
-        sizes,
         description,
-        category,
-        gender,
-        price,
-        discount,
-        status
+        price
     });
     return data;
 };
 
 export const deleteProduct = async (id) => {
-    const { data } = await axios.delete(`${process.env.REACT_APP_API_BASE_URL}`);
+    const { data } = await axios.delete(`${process.env.REACT_APP_API_BASE_URL}/products/${id}`);
     return data;
 };
