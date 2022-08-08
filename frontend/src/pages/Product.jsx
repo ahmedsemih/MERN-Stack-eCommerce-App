@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useCookies } from 'react-cookie';
 import { useLocation } from 'react-router-dom';
-import { Box, Image, SimpleGrid, Text, Divider, Button, IconButton, useDisclosure } from '@chakra-ui/react';
+import { Box, Image, SimpleGrid, Text, Divider, Button, IconButton, useDisclosure, useToast } from '@chakra-ui/react';
 import { Favorite, FavoriteBorder, Info } from '@mui/icons-material';
 import StarRatings from 'react-star-ratings';
 
@@ -14,11 +14,12 @@ import { getProductById } from '../services/ProductServices';
 import { addFavorite, deleteFavorite } from '../services/UserServices';
 import { getCommentByProductId } from '../services/CommentServices';
 import { getRatingByProductId } from '../services/RatingServices';
+import useGetUserHaveThis from '../hooks/useGetUserHaveThis';
 
 
 const Product = () => {
 
-
+  const toast = useToast();
   const location = useLocation();
   const { cart, setCart, refresh, setRefresh } = useCartContext();
   const { currentUser } = useUserContext();
@@ -34,6 +35,7 @@ const Product = () => {
   const [inCart, setInCart] = useState(false);
   const [amount, setAmount] = useState(0);
   const [cookies, setCookies, removeCookie] = useCookies(['cart']);
+  const [have] = useGetUserHaveThis(currentUser, location.state.productId);
 
   useEffect(() => {
     setIsFavorite(status);
@@ -78,21 +80,31 @@ const Product = () => {
   };
 
   const onClickAddCart = () => {
-    const currentIndex = cart.findIndex(item => item.id === location.state.productId);
-    if (currentIndex >= 0) {
-      cart[currentIndex].amount += 1;
-      cart[currentIndex].price = product.price * cart[currentIndex].amount;
-      setAmount(amount + 1);
-      setCookies('cart', cart, { path: '/' });
+    if (selectedSize !== "") {
+      const currentIndex = cart.findIndex(item => item.id === location.state.productId);
+      if (currentIndex >= 0) {
+        cart[currentIndex].amount += 1;
+        cart[currentIndex].price = product.price * cart[currentIndex].amount;
+        setAmount(amount + 1);
+        setCookies('cart', cart, { path: '/' });
+      } else {
+        setCart([...cart, {
+          id: location.state.productId,
+          amount: 1,
+          price: product.price
+        }]);
+        setCookies('cart', cart, { path: '/' });
+      }
+      setRefresh(!refresh);
     } else {
-      setCart([...cart, {
-        id: location.state.productId,
-        amount: 1,
-        price: product.price
-      }]);
-      setCookies('cart', cart, { path: '/' });
+      toast({
+        title: 'Error!',
+        description: 'You must choose a size.',
+        status: 'error',
+        duration: 2000,
+        isClosable: true
+      });
     }
-    setRefresh(!refresh);
   };
 
   const onClickRemoveCart = () => {
@@ -119,6 +131,20 @@ const Product = () => {
       }
     }
     setRefresh(!refresh);
+  };
+
+  const onClickWrite = () => {
+    if (have) {
+      onOpen(true);
+    } else {
+      toast({
+        title: 'Error!',
+        description: 'You must have this to write a review.',
+        status: 'error',
+        duration: 2000,
+        isClosable: true
+      });
+    }
   };
 
   return (
@@ -169,9 +195,9 @@ const Product = () => {
                 {
                   inCart
                     ?
-                    <Box display='flex' alignItems='center' width={{base:'100%',sm:'40%'}} >
+                    <Box display='flex' alignItems='center' width={{ base: '100%', sm: '40%' }} >
                       <Button onClick={onClickRemoveCart} disabled={amount === 0} colorScheme='facebook'>-</Button>
-                      <Text fontSize={25} px={2} width={{base:'100%',sm:'60%'}} textAlign='center' >{amount}</Text>
+                      <Text fontSize={25} px={2} width={{ base: '100%', sm: '60%' }} textAlign='center' >{amount}</Text>
                       <Button onClick={onClickAddCart} colorScheme='facebook' >+</Button>
                     </Box>
                     :
@@ -240,7 +266,7 @@ const Product = () => {
               </Box>
               <Text my={3} display='flex' alignItems='center' ><Info sx={{ fontSize: '16px', mr: 1 }} /> You must have purchased the product for write a review.  </Text>
             </Box>
-            <Button ml={2} mr={{ base: 0, md: 5 }} height={50} colorScheme='facebook' onClick={onOpen} >
+            <Button ml={2} mr={{ base: 0, md: 5 }} height={50} colorScheme='facebook' onClick={onClickWrite} >
               Write a Review
             </Button>
           </Box>

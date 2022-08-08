@@ -42,7 +42,6 @@ const FilterMenu = ({ openFilter, setProducts, setSortBy }) => {
             getProductsByQueries(minPrice, maxPrice, gender, color)
                 .then(result => {
                     setProducts(result.products);
-                    console.log(result)
                 });
         } else if (gender !== "all" && color === "all") {
             getProductByGender(gender, minPrice, maxPrice)

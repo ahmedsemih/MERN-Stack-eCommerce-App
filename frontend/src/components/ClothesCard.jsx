@@ -73,7 +73,7 @@ const ClothesCard = ({ productId, isDelivered }) => {
     const currentIndex = cart.findIndex(item => item.id === productId);
     if (currentIndex >= 0) {
       if (cart[currentIndex].amount === 1) {
-        const newCart = new Array([]);
+        const newCart = [];
         cart.forEach((item, index) => {
           index !== currentIndex && newCart.push(item);
         })

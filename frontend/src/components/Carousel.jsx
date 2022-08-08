@@ -22,9 +22,9 @@ const settings = {
 };
 
 const Carousel = () => {
-  
-  const navigate=useNavigate();
-  const {setSearch}=useSearchContext();
+
+  const navigate = useNavigate();
+  const { setSearch } = useSearchContext();
   const [images, setImages] = useState([]);
   const [slider, setSlider] = useState("");
 
@@ -38,7 +38,7 @@ const Carousel = () => {
       });
   }, []);
 
-  const onClickImage=()=>{
+  const onClickImage = () => {
     setSearch('a');
     navigate('/search');
   }
@@ -78,9 +78,9 @@ const Carousel = () => {
         {
           images && images.map((image, index) => (
             <Box
-            onClick={onClickImage}
+              onClick={onClickImage}
               key={index}
-              height={{ base: '180px', sm: '400px', md: '500px', lg: '650px' }}
+              height={{ base: '180px', sm: '400px', md: '500px', lg: '660px' }}
               position="relative"
               backgroundPosition="center"
               backgroundRepeat="no-repeat"
@@ -90,9 +90,9 @@ const Carousel = () => {
             />
           ))
         }
-      </Slider>
-    </Box>
-  )
+        </Slider >
+      </Box >
+    )
 }
 
-export default Carousel
+export default Carousel;

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Box, Table, Thead, Tbody, Tr, Td, Th, TableContainer, Button, Image, useToast, CircularProgress, useDisclosure } from '@chakra-ui/react';
+import { Box, Table, Thead, Tbody, Tr, Td, Th, TableContainer, CircularProgress } from '@chakra-ui/react';
 import moment from 'moment';
 
 import { getAllOrders, getOrdersByStatus } from '../services/OrderServices';
@@ -41,7 +41,7 @@ const OrdersforAdmin = () => {
                 <Th>Address</Th>
                 <Th>Products</Th>
                 <Th>Order Date</Th>
-                <Th onClick={()=>setCurrentStatus(!currentStatus)} cursor='pointer' _hover={{textDecoration:'underline'}} >Status - {currentStatus ? "Active" : "All"}</Th>
+                <Th onClick={() => setCurrentStatus(!currentStatus)} cursor='pointer' _hover={{ textDecoration: 'underline' }} >Status - {currentStatus ? "Active" : "All"}</Th>
               </Tr>
             </Thead>
             <Tbody>

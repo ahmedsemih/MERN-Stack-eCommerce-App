@@ -16,7 +16,7 @@ const ReviewModal = ({ onClose, isOpen, productId }) => {
     const [ratingId, commentId] = useGetReviewId(currentUser, productId);
 
     useEffect(() => {
-        if (ratingId !== "") {
+        if (ratingId !== "" && commentId ) {
             getRatingById(ratingId)
                 .then((result) => {
                     setRating(result.rating.rating);

@@ -5,7 +5,18 @@
   list-style: none;
 }
 
+body{
+  height: 100vh;
+  min-height:100vh;
+  position:relative;
+}
+
 a{
   text-decoration: none;
   color:inherit;
+}
+
+.footer{
+  position: relative !important ;
+  bottom:0 !important;
 }

@@ -14,22 +14,21 @@ const Orders = () => {
   const { currentUser } = useUserContext();
   const [currentOrders, setCurrentOrders] = useState("active");
   const [orders, setOrders] = useState([]);
-  const [isEmpty, setIsEmpty] = useState(false);
+  const [isEmpty, setIsEmpty] = useState(true);
 
   useEffect(() => {
     getOrdersByUserId(currentUser)
       .then((result) => {
-        setOrders(result.orders);
+        var orderArray=result.orders;
+        setOrders(orderArray.sort((a, b) => (Number(a.orderDate) - Number(b.orderDate))).reverse());
         result.orders.forEach((order) => {
-          if (currentOrders === "active" && !order.status) setIsEmpty(true);
+          if (currentOrders === "active" && order.status){ setIsEmpty(false)};
         });
       });
     if (currentOrders === "all") {
       setIsEmpty(false);
-    } else {
-      setIsEmpty(true);
-    }
-  }, [currentUser, currentOrders]);
+    }      
+  }, [currentUser, currentOrders, setOrders]);
 
   return (
     <Box width='100%' my={10}>
@@ -55,7 +54,7 @@ const Orders = () => {
       </Box>
       <Box py={3} px={{ base: 3, md: 5, lg: 10 }} >
         {
-          orders ? orders.map((order, index) => {
+          orders.length>0 ? orders.map((order, index) => {
             if (currentOrders === "active") {
               return order.status && <OrderCard key={index} orderId={order._id} />
             } else {

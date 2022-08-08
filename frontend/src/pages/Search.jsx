@@ -18,7 +18,7 @@ const Search = () => {
   const [sortBy, setSortBy] = useState("recommended");
 
   useEffect(() => {
-    if (state !== null && products.length === 0 && search === "" && search === " " && search === null && search === undefined) {
+    if (state !== null) {
       getProductByCategoryId(state.categoryId)
         .then((result) => {
           setProducts(result.products);
@@ -32,8 +32,7 @@ const Search = () => {
         });
       setSortBy("recommended");
     }
-
-  }, [state, products, sortBy, search, canSearch]);
+  }, [state, sortBy, search, canSearch]);
 
   const handleChange = (e) => {
     setSortBy(e.target.value);
@@ -71,7 +70,7 @@ const Search = () => {
         <FilterMenu openFilter={openFilter} columns={{ base: 1, sm: 2, md: 2, lg: 3, xl: 4 }} setProducts={setProducts} setSortBy={setSortBy} />
         {
           products && products.map((product, index) => {
-            return <ClothesCard key={index} productId={product._id} categoryId={product.category} />
+            return <ClothesCard key={index} productId={product._id} />
           })
         }
         {

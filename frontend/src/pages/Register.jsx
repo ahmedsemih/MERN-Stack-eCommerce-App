@@ -110,6 +110,7 @@ const Register = () => {
           <Input
             type='tel'
             name='phone'
+            maxLength={11}
             pattern='[0-9]'
             placeholder='Enter Phone'
             onChange={handleChange}
