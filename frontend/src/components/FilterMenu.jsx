@@ -10,7 +10,7 @@ const FilterMenu = ({ openFilter, setProducts, setSortBy }) => {
     const {canSearch,setCanSearch}=useSearchContext();
 
     const [minPrice, setMinPrice] = useState(30);
-    const [maxPrice, setMaxPrice] = useState(500);
+    const [maxPrice, setMaxPrice] = useState(250);
     const [gender, setGender] = useState("all");
     const [color, setColor] = useState("all");
 
@@ -18,7 +18,7 @@ const FilterMenu = ({ openFilter, setProducts, setSortBy }) => {
         setColor("all");
         setGender("all");
         setMinPrice(30);
-        setMaxPrice(500);
+        setMaxPrice(250);
     },[canSearch]);
 
     const onChangePriceRange = (val) => {
@@ -69,7 +69,7 @@ const FilterMenu = ({ openFilter, setProducts, setSortBy }) => {
                 <RangeSlider
                     onChangeEnd={onChangePriceRange}
                     defaultValue={[minPrice, maxPrice]}
-                    max={500}
+                    max={250}
                     min={30}
                 >
                     <RangeSliderTrack>

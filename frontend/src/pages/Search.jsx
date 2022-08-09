@@ -32,7 +32,7 @@ const Search = () => {
         });
       setSortBy("recommended");
     }
-  }, [state, sortBy, search, canSearch]);
+  }, [state, search, canSearch]);
 
   const handleChange = (e) => {
     setSortBy(e.target.value);

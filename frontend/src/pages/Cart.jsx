@@ -90,7 +90,7 @@ const Cart = () => {
         }
           <Text fontSize={28} mt={10} fontWeight={600} color='facebook.500' >Order Details</Text>
           <Text mt={3} fontSize={24} color='facebook.500' fontWeight={300} >Product Amount: {totalAmount}</Text>
-          <Text mt={3} fontSize={24} color='facebook.500' fontWeight={300} >Total Price: {totalPrice}</Text>
+          <Text mt={3} fontSize={24} color='facebook.500' fontWeight={300} >Total Price: {totalPrice} $</Text>
           <Button mt={10} colorScheme='facebook' onClick={onClickPurchase} >Purchase</Button>
           <Button mt={3} variant='text' color='facebook.500' onClick={onClickRemove} >Remove All</Button>
 
