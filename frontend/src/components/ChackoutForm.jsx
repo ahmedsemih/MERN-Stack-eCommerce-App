@@ -81,10 +81,11 @@ const ChackoutForm = ({ address }) => {
 
         removeCookie('cart', { path: '/' });
 
+        const baseUrl = window.location.origin;
         const { error } = await stripe.confirmPayment({
             elements,
             confirmParams: {
-                return_url: "http://localhost:3000/orders",
+                return_url: `${baseUrl}/orders`,
             },
         });
 

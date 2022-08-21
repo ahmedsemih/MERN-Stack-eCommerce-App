@@ -37,7 +37,6 @@ app.use('/minis', miniImageRoutes);
 
 
 // STRIPE CONNECTION
-
 app.post("/create-payment-intent", async (req, res) => {
     const { price } = req.body;
 
@@ -49,7 +48,7 @@ app.post("/create-payment-intent", async (req, res) => {
         },
     });
 
-    res.send({
+    res.status(200).send({
         clientSecret: paymentIntent.client_secret,
     });
 });

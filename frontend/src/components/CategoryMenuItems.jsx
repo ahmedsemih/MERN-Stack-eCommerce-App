@@ -14,7 +14,7 @@ const CategoryMenuItems = ({ genreId }) => {
             .then((result) => {
                 setCategories(result.category);
             });
-    });
+    },[genreId]);
 
     const handleClick = (id) => {
         navigate('/search', { state: { categoryId: id } });

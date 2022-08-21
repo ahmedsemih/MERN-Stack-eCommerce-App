@@ -56,6 +56,7 @@ const App = () => {
             :
             <Route path='/admin/*' element={<Navigate to='/' />} />
         }
+        <Route path='*' element={<Navigate to='/' />} />
       </Routes>
       <Footer />
     </>
