@@ -1,46 +1,40 @@
 https://user-images.githubusercontent.com/102798814/185803808-cfc2fd12-aaae-454d-b25b-810481ffa4f5.mp4
 
-# CLOTHIFY
+# Clothify
 
-MERN-Stack E-Commerce Web Application.
+This application is a classic clothes sales app. People can buy somethings and write reviews about them. 
+They can add favorites if they like. they can track their active orders and view order history. 
+Admin can add, edit and remove new categories and products and  edit ads and banners on the homepage.
 
-**Live demo: [https://clothifybyase.netlify.app/](https://clothifybyase.netlify.app/)**
+## Built with
 
-## Frontend built with
+- [React](https://reactjs.org/) - Javascript Library For UI
 
-- [React](https://reactjs.org/)
+- [Chakra UI](https://chakra-ui.com/) - UI Component Library
 
-- [React Router](https://v5.reactrouter.com/)
+- [Javascript](https://www.javascript.com/) - Main Language
 
-- [Chakra UI](https://chakra-ui.com/)
+- [NodeJS](https://nodejs.org/en/) - Server Environment
 
-- [Axios](https://axios-http.com/docs/intro/)
+- [Expressjs](https://expressjs.com/) - NodeJS Framework For Server Processes
 
-- [Momentjs](https://momentjs.com/)
+- [MongoDB](https://www.mongodb.com/) - NOSQL Database
 
-- [Formik](https://formik.org/)
+- [Mongoose](https://mongoosejs.com/) - Database ORM
 
-- [Yup](https://www.npmjs.com/package/yup)
+- [Formik](https://formik.org/) - React Form Library
 
-- [Mui Icons](https://mui.com/material-ui/material-icons/)
+- [Yup](https://www.npmjs.com/package/yup) - For Validations
 
-- [React Cookie](https://www.npmjs.com/package/react-cookie)
+- [React Cookie](https://www.npmjs.com/package/react-cookie) - For Cookies
 
-- [React Slick](https://react-slick.neostack.com/)
+- [Bcryptjs](https://www.npmjs.com/package/bcryptjs) - For Encryption
 
-## Backend built with
+- [MUI Icons](https://mui.com/material-ui/material-icons/) - Icons
 
-- [Express](https://expressjs.com/)
+- [Cloudinary](https://cloudinary.com/) - Cloud Image Storage
 
-- [Mongoose](https://mongoosejs.com/)
-
-- [Bcrypt](https://www.npmjs.com/package/bcrypt)
-
-- [Cors](https://www.npmjs.com/package/cors)
-
-## For payment system
-
-- [Stripe](https://stripe.com/)
+- [Stripe](https://stripe.com/) - Payment System
 
 ## Getting Started
 
@@ -61,4 +55,3 @@ You must assign environment variables for both and start the dev server
 ```
 npm start
 ```
-
